@@ -21,3 +21,10 @@ functions:
       - httpApi:
           path: /
           method: GET
+
+resources:
+  Resources:
+    PresignedPostBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: full-presigned-post-flow
