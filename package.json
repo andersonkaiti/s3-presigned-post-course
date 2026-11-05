@@ -1,0 +1,38 @@
+{
+  "name": "s3-presigned-post-course",
+  "type": "module",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.5.0",
+      "onFail": "download"
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.5",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@types/aws-lambda": "^8.10.164",
+    "@types/node": "^26.6.6",
+    "commitlint-config-gitmoji": "^2.3.1",
+    "lint-staged": "^17.6.0",
+    "typescript": "^7.0.2"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional",
+      "gitmoji"
+    ],
+    "rules": {
+      "footer-empty": [
+        2,
+        "never"
+      ]
+    }
+  },
+  "lint-staged": {
+    "**/*.{json,ts}": [
+      "biome check --write"
+    ]
+  }
+}
