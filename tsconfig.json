@@ -24,6 +24,7 @@
     "noEmit": true,
 
     "paths": {
+      "@clients/*": ["./src/clients/*"],
       "@functions/*": ["./src/functions/*"],
       "@shared/*": ["./src/shared/*"],
       "@app-types/*": ["./src/types/*"],

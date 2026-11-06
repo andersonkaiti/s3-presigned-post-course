@@ -4,6 +4,15 @@ provider:
   name: aws
   runtime: nodejs24.x
   architecture: arm64
+  environment:
+    BUCKET_NAME: !Ref PresignedPostBucket
+  iam:
+    role:
+      statements:
+        - Action:
+            - s3:putObject
+          Effect: Allow
+          Resource: !Sub "${PresignedPostBucket.Arn}/*"
 
 package:
   individually: true
@@ -15,12 +24,12 @@ build:
     bundle: true
 
 functions:
-  hello:
-    handler: src/functions/hello.handler
+  getPresignedPUT:
+    handler: src/functions/get-presigned-put.handler
     events:
       - httpApi:
           path: /
-          method: GET
+          method: POST
 
 resources:
   Resources:
