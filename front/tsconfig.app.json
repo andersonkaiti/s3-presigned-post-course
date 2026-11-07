@@ -23,6 +23,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
+      "@utils/*": ["./src/utils/*"],
       "@/*": ["./src/*"]
     }
   },
