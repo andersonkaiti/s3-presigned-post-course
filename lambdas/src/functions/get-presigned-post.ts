@@ -45,7 +45,7 @@ export async function handler(event: APIGatewayProxyEventV2) {
   const ONE_MINUTE = 60
   const TEN_MINUTES = 10 * ONE_MINUTE
 
-  const result = await createPresignedPost(s3Client, {
+  const { url, fields } = await createPresignedPost(s3Client, {
     Bucket: env.BUCKET_NAME,
     Key: `${randomUUID()}-${filename}`,
     Expires: TEN_MINUTES,
@@ -55,7 +55,8 @@ export async function handler(event: APIGatewayProxyEventV2) {
   return response({
     statusCode: 200,
     body: {
-      result,
+      url,
+      fields,
     },
   })
 }

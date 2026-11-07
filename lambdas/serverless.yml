@@ -4,6 +4,8 @@ provider:
   name: aws
   runtime: nodejs24.x
   architecture: arm64
+  httpApi:
+    cors: true
   environment:
     BUCKET_NAME: !Ref PresignedPostBucket
   iam:
@@ -37,3 +39,11 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: full-presigned-post-flow
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - "POST"
