@@ -8,20 +8,16 @@
     }
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.1161.0",
-    "@aws-sdk/s3-presigned-post": "^3.1163.0",
-    "@aws-sdk/s3-request-presigner": "^3.1161.0",
     "@biomejs/biome": "2.6.5",
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
-    "@types/aws-lambda": "^8.10.164",
-    "@types/node": "^26.6.6",
     "commitlint-config-gitmoji": "^2.3.1",
-    "lint-staged": "^17.6.0",
-    "typescript": "^7.0.2"
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0"
   },
-  "dependencies": {
-    "zod": "^4.6.7"
+  "scripts": {
+    "format": "biome check --write",
+    "prepare": "husky"
   },
   "commitlint": {
     "extends": [
@@ -29,7 +25,7 @@
       "gitmoji"
     ],
     "rules": {
-      "footer-empty": [
+      "scope-empty": [
         2,
         "never"
       ]
