@@ -1,7 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { extname } from 'node:path'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { s3Client } from '@clients/s3.client.ts'
 import { env } from '@shared/config/env.ts'
 import { parseEvent } from '@shared/utils/parse-event.ts'
@@ -46,19 +45,16 @@ export async function handler(event: APIGatewayProxyEventV2) {
 
   const { filename } = data
 
-  const command = new PutObjectCommand({
+  const result = await createPresignedPost(s3Client, {
     Bucket: env.BUCKET_NAME,
-    Key: `${randomUUID()}${filename}`,
-  })
-
-  const signedURL = await getSignedUrl(s3Client, command, {
-    expiresIn: TEN_MINUTES,
+    Key: `${randomUUID()}-${filename}`,
+    Expires: TEN_MINUTES,
   })
 
   return response({
     statusCode: 200,
     body: {
-      signedURL,
+      result,
     },
   })
 }

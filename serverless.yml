@@ -24,8 +24,8 @@ build:
     bundle: true
 
 functions:
-  getPresignedPUT:
-    handler: src/functions/get-presigned-put.handler
+  getPresignedPOST:
+    handler: src/functions/get-presigned-post.handler
     events:
       - httpApi:
           path: /

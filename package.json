@@ -1,6 +1,5 @@
 {
   "name": "s3-presigned-post-course",
-  "type": "module",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
@@ -10,6 +9,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1161.0",
+    "@aws-sdk/s3-presigned-post": "^3.1163.0",
     "@aws-sdk/s3-request-presigner": "^3.1161.0",
     "@biomejs/biome": "2.6.5",
     "@commitlint/cli": "^21.2.4",
@@ -19,6 +19,9 @@
     "commitlint-config-gitmoji": "^2.3.1",
     "lint-staged": "^17.6.0",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
   },
   "commitlint": {
     "extends": [
@@ -36,8 +39,5 @@
     "**/*.{json,ts}": [
       "biome check --write"
     ]
-  },
-  "dependencies": {
-    "zod": "^4.6.7"
   }
 }
