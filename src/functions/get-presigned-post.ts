@@ -8,9 +8,6 @@ import { response } from '@shared/utils/response.ts'
 import type { APIGatewayProxyEventV2 } from 'aws-lambda'
 import { z } from 'zod'
 
-const ONE_MINUTE = 60
-const TEN_MINUTES = 10 * ONE_MINUTE
-
 const ONE_KILOBYTE = 1024
 const ONE_MEGABYTE = 1024 * ONE_KILOBYTE
 
@@ -43,12 +40,16 @@ export async function handler(event: APIGatewayProxyEventV2) {
     })
   }
 
-  const { filename } = data
+  const { filename, filesize } = data
+
+  const ONE_MINUTE = 60
+  const TEN_MINUTES = 10 * ONE_MINUTE
 
   const result = await createPresignedPost(s3Client, {
     Bucket: env.BUCKET_NAME,
     Key: `${randomUUID()}-${filename}`,
     Expires: TEN_MINUTES,
+    Conditions: [['content-length-range', filesize, filesize]],
   })
 
   return response({
