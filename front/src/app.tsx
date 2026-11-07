@@ -1,19 +1,20 @@
+import { Button } from '@components/ui/button'
+import { Progress } from '@components/ui/progress'
 import { bytesToMB } from '@utils/bytes-to-mb'
 import { cn } from 'cn'
-import { CloudUpload } from 'lucide-react'
-import { useState } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { Button } from './components/ui/button'
+import { CloudUpload, Loader2 } from 'lucide-react'
+import { useUpload } from './hooks/use-upload'
 
 export function App() {
-  const [file, setFile] = useState<File>()
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    multiple: false,
-    onDrop: ([acceptedFile]) => {
-      setFile(acceptedFile)
-    },
-  })
+  const {
+    file,
+    isLoading,
+    progress,
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    handleUpload,
+  } = useUpload()
 
   return (
     <main className="mx-auto flex min-h-screen max-w-4xl flex-col justify-center gap-4 p-4">
@@ -46,7 +47,12 @@ export function App() {
         </div>
       )}
 
-      <Button disabled={!file}>Upload</Button>
+      {file && progress > 0 && <Progress value={progress} />}
+
+      <Button disabled={!file || isLoading} onClick={handleUpload}>
+        {isLoading && <Loader2 className="size-4 animate-spin" />}
+        Upload
+      </Button>
     </main>
   )
 }
