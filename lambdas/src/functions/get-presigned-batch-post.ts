@@ -46,11 +46,17 @@ export async function handler(event: APIGatewayProxyEventV2) {
   const ONE_MINUTE = 60
   const TEN_MINUTES = 10 * ONE_MINUTE
 
+  // Must stay on a single line: multipart FormData converts "\n" to "\r\n",
+  // which would break the exact-match ("eq") policy condition.
+  const tagging =
+    '<Tagging><TagSet><Tag><Key>apply-lifecycle</Key><Value>true</Value></Tag></TagSet></Tagging>'
+
   const { url, fields } = await createPresignedPost(s3Client, {
     Bucket: env.BUCKET_NAME,
     Key: '${filename}',
     Expires: TEN_MINUTES,
-    Conditions: [['content-length-range', 0, ONE_MEGABYTE]],
+    Conditions: [['content-length-range', 0, ONE_MEGABYTE], { tagging }],
+    Fields: { tagging },
   })
 
   return response({
