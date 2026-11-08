@@ -10,6 +10,26 @@ Upload de arquivos direto do navegador para o Amazon S3 usando **presigned POST*
 
 ---
 
+## Stack
+
+| Camada        | Tecnologia           | Uso                                       |
+| ------------- | -------------------- | ----------------------------------------- |
+| Front         | React 19             | Interface                                 |
+| Front         | Vite                 | Dev server e build                        |
+| Front         | Tailwind CSS         | Estilização                               |
+| Front         | react-dropzone       | Seleção de arquivos por arrastar e soltar |
+| Front         | axios                | Requisições HTTP e progresso do upload    |
+| Backend       | AWS Lambda (Node.js) | Geração do presigned POST                 |
+| Backend       | API Gateway (HTTP)   | Exposição das funções, com CORS           |
+| Backend       | Serverless Framework | Deploy da infraestrutura                  |
+| Backend       | zod                  | Validação do corpo da requisição          |
+| Armazenamento | Amazon S3            | Bucket que recebe os arquivos             |
+| Ferramentas   | TypeScript           | Tipagem em todo o projeto                 |
+| Ferramentas   | pnpm                 | Gerenciador de pacotes (monorepo)         |
+| Ferramentas   | Biome                | Lint e formatação                         |
+
+---
+
 ## Como funciona
 
 ```mermaid
@@ -33,17 +53,6 @@ sequenceDiagram
 | Tamanho máximo  | Menos de 1 MB          |
 | Validade da URL | 10 minutos             |
 | Tag do objeto   | `apply-lifecycle=true` |
-
----
-
-## Stack
-
-| Camada        | Tecnologias                                                     |
-| ------------- | --------------------------------------------------------------- |
-| Front         | React 19, Vite, Tailwind CSS, axios, react-dropzone             |
-| Backend       | AWS Lambda (Node.js 24), API Gateway, Serverless Framework, zod |
-| Armazenamento | Amazon S3                                                       |
-| Ferramentas   | TypeScript, pnpm, Biome                                         |
 
 ---
 
