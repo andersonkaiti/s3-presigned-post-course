@@ -32,6 +32,12 @@ functions:
       - httpApi:
           path: /
           method: POST
+  getPresignedBatchPOST:
+    handler: src/functions/get-presigned-batch-post.handler
+    events:
+      - httpApi:
+          path: /batch
+          method: POST
 
 resources:
   Resources:
