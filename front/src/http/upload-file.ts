@@ -1,9 +1,8 @@
 import axios from 'axios'
-import type { Dispatch } from 'react'
 import { getPresignedPOST } from './get-presigned-post'
 
 interface IUploadFileParams {
-  onProgress: Dispatch<React.SetStateAction<number>>
+  onProgress: (progress: number) => void
   file: File
 }
 

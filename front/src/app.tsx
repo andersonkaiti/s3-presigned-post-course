@@ -1,18 +1,19 @@
 import { Button } from '@components/ui/button'
+import { Checkbox } from '@components/ui/checkbox'
 import { Progress } from '@components/ui/progress'
+import { useUpload } from '@hooks/use-upload'
 import { bytesToMB } from '@utils/bytes-to-mb'
 import { cn } from 'cn'
 import { CloudUpload, Loader2 } from 'lucide-react'
-import { useUpload } from './hooks/use-upload'
 
 export function App() {
   const {
-    file,
+    uploads,
     isLoading,
-    progress,
     getRootProps,
     getInputProps,
     isDragActive,
+    setAllowMultiple,
     handleUpload,
   } = useUpload()
 
@@ -38,18 +39,32 @@ export function App() {
         </span>
       </div>
 
-      {file && (
-        <div className="border-accent hover:bg-accent/20 mt-5 rounded-lg border px-4 py-2 transition-all">
-          <span>{file.name}</span>
-          <small className="text-muted-foreground block">
-            {bytesToMB(file.size)} MB
-          </small>
+      <div className="my-4 flex items-center gap-2">
+        <Checkbox onCheckedChange={setAllowMultiple} />
+        <span className="text-muted-foreground text-sm">
+          Permitir múltiplos arquivos
+        </span>
+      </div>
+
+      {!!uploads.length && (
+        <div>
+          {uploads.map((upload) => (
+            <div
+              key={upload.file.name}
+              className="border-accent hover:bg-accent/20 mt-5 rounded-lg border px-4 py-2 transition-all"
+            >
+              <span>{upload.file.name}</span>
+              <small className="text-muted-foreground block">
+                {bytesToMB(upload.file.size)} MB
+              </small>
+
+              <Progress value={upload.progress} />
+            </div>
+          ))}
         </div>
       )}
 
-      {file && progress > 0 && <Progress value={progress} />}
-
-      <Button disabled={!file || isLoading} onClick={handleUpload}>
+      <Button disabled={!uploads || isLoading} onClick={handleUpload}>
         {isLoading && <Loader2 className="size-4 animate-spin" />}
         Upload
       </Button>
